@@ -1,26 +1,20 @@
-key: YOUR_SECRET_KEY # prevents unauthorized access
- 
 models:
-  Post: # models must be singular and CamelCased
-    belongsTo: [User] # Relations will be used in REST and GraphQL
+  Post:
     hasMany: [Comment]
-    count: 50 # generate 50 items
     fake:
-      title: loremWords # random generator have default values
-      body: { loremWords: [3, 10] } # but you can pass arguments for some
-    data: [
-        { title: some non-random title }, # update title for post#1
-        { title: some non-random title }, # update title for post#2
-      ]
+      _count: 10
+      cover: { imageURL: [1920, 1080] }
+      title: { loremWords: [3, 10] }
+      body: loremParagraphs
+      category: { stringOf: [one, two, three] }
+      isDraft: { bool: 90 }
+      views: { int: [0, 1000] }
+      createdAt: dateTime
  
   Comment:
     belongsTo: [Post]
-    count: 100
     fake:
+      _count: 25
       email: email
-      body: loremWords
- 
-  User:
-    hasMany: [Post]
-    # You can also provide all the data yourself and not use random generators
-    data: [{ name: Alice }] # create a single user
+      body: loremParagraphs
+      createdAt: { dateTime: [2010-01-01T00:00:00Z, 2020-12-31T23:59:59Z] }
